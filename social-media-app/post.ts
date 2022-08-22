@@ -20,13 +20,14 @@ export class Post implements IPost {
     replies: Post[];
 
     // constructor
-    constructor(user:User, contentInput:string, dateCreated = new Date(), userId:number) {
-        this.user = user;
+    constructor(inputUser:User, contentInput:string, userId:number, dateCreated:Date = new Date()) {
+        this.user = inputUser;
         this.content = contentInput;
-        this.dateCreated = dateCreated;
+        this.dateCreated = new Date();
         this.userId = userId;
         this.photos = [];
         this.replies = [];
+        this.postId = 0;
     }
 
     // functions
@@ -38,21 +39,21 @@ export class Post implements IPost {
     }
 }
 
-export class BookmarkedPost implements IPost {
-    // fields
-    content: string;
-    dateCreated: Date;
-    user: User;
+// export class BookmarkedPost implements IPost {
+//     // fields
+//     content: string;
+//     dateCreated: Date;
+//     user: User;
 
-}
+// }
 
-export class LikedPost implements IPost {
-    // fields
-    content: string;
-    dateCreated: Date;
-    user: User;
+// export class LikedPost implements IPost {
+//     // fields
+//     content: string;
+//     dateCreated: Date;
+//     user: User;
 
-}
+// }
 
 // let post: Post = new Post ()
 // post.user.firstName;

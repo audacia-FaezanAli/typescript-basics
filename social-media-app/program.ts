@@ -1,29 +1,7 @@
 import {keyInSelect, question} from "readline-sync";
 import { Post } from "./post";
 import { User } from "./user";
-import {initialQuestions, userCreationQuestions, updateUserQuestions} from "./questions"
-
-
-// const initialQuestions: string[] = [
-//     "Create new user", 
-//     "Update existing user", 
-//     "Delete user",
-//     "Create new post",
-//     "Exit",];
-
-// const userCreationQuestions: string[] = [
-//     "Please enter your first name: ", 
-//     "Please enter your last name: ", 
-//     "Please enter a user name: ",
-//     "Please enter your date of birth (yyyy-mm-dd): "];
-
-// const updateUserQuestions: string [] = [
-//     "Update first name",
-//     "Update last name",
-//     "Update user name",
-//     "Update date of birth",
-//     "Go back"
-// ];
+import {initialQuestions, userCreationQuestions, updateUserQuestions, userActionQuestions, userPostQuestions} from "./questions"
 
 let users:User[] = [];
 let userId = 0;
@@ -66,10 +44,48 @@ function deleteUser(users:User[], userNameToDelete:string): void{
     users.splice(userIndex, 1)
 }
 
-function createPost(users:User[], userIndex:number): void {
+//  function for the logic of user actions e.g post, chat, photos
+function userAction(userIndex:number): number {
+    let userActionSelection = askQuestions(userActionQuestions)
+    if (userActionSelection === 0) {
+        postInterface(userActionSelection, userIndex);
+    } else if (userActionSelection === 1) {
+        return userIndex;
+    } else if (userActionSelection === 2) {
+        return userIndex;
+    } else if (userActionSelection === 3) {
+        return userIndex;
+    } else {
+        return userAction(userIndex);
+    }
+    return userAction(userIndex);
+}
 
+// function for user post choices
+function postInterface(userActionSelection:number, userIndex:number): number {
+    let userPostAnswer = askQuestions(userPostQuestions);
+    let userPostArray = users[userIndex].posts
+    if (userPostAnswer === 0) {
+        let newPost = createPost(users, userIndex)
+        userPostArray.push(newPost)
+        newPost.postId = userPostArray.indexOf(newPost)
+        newPost.displayPost()
+    } else if (userPostAnswer === 1) {
+        return userIndex;
+    } else if (userPostAnswer === 2) {
+        return userIndex;
+    } else if (userPostAnswer === 3) {
+        return userIndex;
+    } else if (userPostAnswer === 4){
+        userAction(userIndex)
+    }
+    return postInterface(userActionSelection, userIndex);
+}
 
-
+function createPost(users:User[], userIndex:number): Post {
+    let postUser = users[userIndex]
+    let postContent = question("Enter post below: \n")
+    return new Post(postUser, postContent, postUser.userId)
 }
 
 function askQuestions(questionList: string[]): number {
@@ -84,6 +100,17 @@ function questionAnswerHandler(): number{
     // console.log(initialAnswer)
     switch(initialAnswer) {
         case 0:
+            let logInUserName = question("Please enter your username: ")
+            let logInUserIndex = users.map(user => user.userName).indexOf(logInUserName)
+            if (logInUserIndex === -1) {
+                console.log(`${logInUserName} DOES NOT EXIST!`)
+                return questionAnswerHandler();
+            } else {
+                userAction(logInUserIndex);
+            }
+            return questionAnswerHandler();
+
+        case 1:
             let userCreationAnswers:string[] = [];
             for (let index = 0; index < userCreationQuestions.length; index++) {
                 userCreationAnswers.push(question(userCreationQuestions[index]))
@@ -93,7 +120,7 @@ function questionAnswerHandler(): number{
             users.push(user);
             return questionAnswerHandler();
 
-        case 1:
+        case 2:
             let userNameToUpdate = question("Please enter the username of the account you would like to update: \n");
             let userIndexToUpdate = users.map(user => user.userName).indexOf(userNameToUpdate)
             if (userIndexToUpdate === -1) {
@@ -105,22 +132,12 @@ function questionAnswerHandler(): number{
                 console.log(users);
                 return questionAnswerHandler();
             }
-            break;
 
-        case 2:
+        case 3:
             let deleteUserName = question("Please enter the username of the account you would like to delete: \n");
             deleteUser(users, deleteUserName);
             console.log("User has been deleted.");
             console.log(users);
-            return questionAnswerHandler();
-            break;
-
-        case 3:
-            let userNameToPost = question("Please enter your username: ")
-            let userIndexToPost = users.map(user => user.userName).indexOf(userNameToPost)
-            if (userIndexToPost === -1) {
-                console.log(`${userNameToPost} DOES NOT EXIST!`)
-            }
             return questionAnswerHandler();
 
         case 4:
