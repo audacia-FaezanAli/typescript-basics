@@ -27,6 +27,11 @@ export const userActionQuestions: string[] = [
 ]
 
 export const userPostQuestions: string[] = [
-    "Create new post"
+    "Create new post",
+    "Edit a post",
+    "Delete a post",
+    "View all posts",
+    "Go back"
 ]
+
 

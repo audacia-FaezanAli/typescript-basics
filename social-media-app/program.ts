@@ -65,17 +65,21 @@ function userAction(userIndex:number): number {
 function postInterface(userActionSelection:number, userIndex:number): number {
     let userPostAnswer = askQuestions(userPostQuestions);
     let userPostArray = users[userIndex].posts
+    // create new post
     if (userPostAnswer === 0) {
         let newPost = createPost(users, userIndex)
         userPostArray.push(newPost)
         newPost.postId = userPostArray.indexOf(newPost)
-        newPost.displayPost()
+    // Edit an existing post
     } else if (userPostAnswer === 1) {
-        return userIndex;
+        editPost(userPostArray);
+    // Delete a post
     } else if (userPostAnswer === 2) {
         return userIndex;
+    // view all posts
     } else if (userPostAnswer === 3) {
         return userIndex;
+    // go back
     } else if (userPostAnswer === 4){
         userAction(userIndex)
     }
@@ -86,6 +90,15 @@ function createPost(users:User[], userIndex:number): Post {
     let postUser = users[userIndex]
     let postContent = question("Enter post below: \n")
     return new Post(postUser, postContent, postUser.userId)
+}
+
+function editPost(userPostArray: Post[]):void {
+    for (let index = 0; index < userPostArray.length; index++) {
+        console.log(`[${index+1}] ${userPostArray[index].content}`);
+    }
+        let postIndexToEdit = +(question(`Choose a post to edit [1...${userPostArray.length}]: `)) -1
+        let editedPost = question("Enter post edit: \n")
+        userPostArray[postIndexToEdit].content = editedPost
 }
 
 function askQuestions(questionList: string[]): number {
