@@ -48,13 +48,13 @@ function deleteUser(users:User[], userNameToDelete:string): void{
 function userAction(userIndex:number): number {
     let userActionSelection = askQuestions(userActionQuestions)
     if (userActionSelection === 0) {
-        postInterface(userActionSelection, userIndex);
+        postsInterface(userActionSelection, userIndex);
     } else if (userActionSelection === 1) {
         return userIndex;
     } else if (userActionSelection === 2) {
         return userIndex;
     } else if (userActionSelection === 3) {
-        return userIndex;
+        questionAnswerHandler();
     } else {
         return userAction(userIndex);
     }
@@ -62,28 +62,28 @@ function userAction(userIndex:number): number {
 }
 
 // function for user post choices
-function postInterface(userActionSelection:number, userIndex:number): number {
+function postsInterface(userActionSelection:number, userIndex:number): number {
     let userPostAnswer = askQuestions(userPostQuestions);
-    let userPostArray = users[userIndex].posts
+    let userPostsArray = users[userIndex].posts
     // create new post
     if (userPostAnswer === 0) {
         let newPost = createPost(users, userIndex)
-        userPostArray.push(newPost)
-        newPost.postId = userPostArray.indexOf(newPost)
+        newPost.postId = userPostsArray.indexOf(newPost)
+        userPostsArray.push(newPost)
     // Edit an existing post
     } else if (userPostAnswer === 1) {
-        editPost(userPostArray);
+        editPost(userPostsArray);
     // Delete a post
     } else if (userPostAnswer === 2) {
-        return userIndex;
+        deletePost(userPostsArray);
     // view all posts
     } else if (userPostAnswer === 3) {
-        return userIndex;
+        viewPosts(userPostsArray);
     // go back
     } else if (userPostAnswer === 4){
         userAction(userIndex)
     }
-    return postInterface(userActionSelection, userIndex);
+    return postsInterface(userActionSelection, userIndex);
 }
 
 function createPost(users:User[], userIndex:number): Post {
@@ -96,15 +96,29 @@ function editPost(userPostArray: Post[]):void {
     for (let index = 0; index < userPostArray.length; index++) {
         console.log(`[${index+1}] ${userPostArray[index].content}`);
     }
-        let postIndexToEdit = +(question(`Choose a post to edit [1...${userPostArray.length}]: `)) -1
-        let editedPost = question("Enter post edit: \n")
-        userPostArray[postIndexToEdit].content = editedPost
+    let postIndexToEdit = +(question(`Choose a post to edit [1...${userPostArray.length}]: `)) -1;
+    let editedPost = question("Enter post edit: \n");
+    userPostArray[postIndexToEdit].content = editedPost;
+}
+
+function viewPosts(userPostArray: Post[]): void {
+    for (let index = 0; index < userPostArray.length; index++) {
+        userPostArray[index].displayPost();
+    }
+}
+
+function deletePost(userPostArray: Post[]): void {
+    for (let index = 0; index < userPostArray.length; index++) {
+        console.log(`[${index+1}] ${userPostArray[index].content}`);
+    }
+    let postIndexToDelete = +(question(`Choose a post to delete [1...${userPostArray.length}]: `)) -1;
+    userPostArray.splice(postIndexToDelete, 1)
 }
 
 function askQuestions(questionList: string[]): number {
     let index = keyInSelect(questionList, "Choose an option", {cancel:false});
     // console.log(index)
-    if (index!==-1) {console.log(`Ok let's ${questionList[index]}`)}
+    if (index!==-1) {console.log(`Ok let's ${questionList[index]}\n`)}
     return index;
 }
 

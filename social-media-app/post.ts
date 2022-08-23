@@ -32,10 +32,11 @@ export class Post implements IPost {
 
     // functions
     displayPost(): void{
-        console.log(this.user.userName)
-        console.log(this.dateCreated)
-        console.log(this.content)
-        console.log(this.replies)
+        console.log("Username: "+this.user.userName)
+        console.log("Date: "+this.dateCreated)
+        console.log("Post: "+this.content)
+        console.log("Replies: "+this.replies.forEach(reply => console.log(reply)))
+        console.log("\n")
     }
 }
 

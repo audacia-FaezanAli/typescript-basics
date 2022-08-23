@@ -3,13 +3,15 @@ export const initialQuestions: string[] = [
     "Create new user", 
     "Update existing user", 
     "Delete user",
-    "Exit",];
+    "Exit"
+];
 
 export const userCreationQuestions: string[] = [
     "Please enter your first name: ", 
     "Please enter your last name: ", 
     "Please enter a user name: ",
-    "Please enter your date of birth (yyyy-mm-dd): "];
+    "Please enter your date of birth (yyyy-mm-dd): "
+];
 
 export const updateUserQuestions: string [] = [
     "Update first name",
@@ -24,7 +26,7 @@ export const userActionQuestions: string[] = [
     "Chat",
     "Photo",
     "Log out"
-]
+];
 
 export const userPostQuestions: string[] = [
     "Create new post",
@@ -32,6 +34,12 @@ export const userPostQuestions: string[] = [
     "Delete a post",
     "View all posts",
     "Go back"
-]
+];
+
+export const userChatQuestions: string[] = [
+    "Create new chat",
+    "Send message",
+    
+];
 
 
