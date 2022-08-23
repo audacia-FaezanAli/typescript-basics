@@ -15,28 +15,29 @@ function createUser(userAnswers:string[], userId:number): User {
     return new User(firstName,lastName,userName,new Date(dateOfBirth),userId)
 }
 
-function updateUser(users: User[], userIndex:number, updateQuestionAnswer:number): number{
-    switch (updateQuestionAnswer) {
-        case 0:
-            let newFirstName = question(`Please enter new details: \n`);
-            users[userIndex].updateFirstName(newFirstName);
-            return updateQuestionAnswer;
-        case 1:
-            let newLastName = question(`Please enter new details: \n`);
-            users[userIndex].updateLastName(newLastName);
-            return updateQuestionAnswer;
-        case 2:
-            let newUserName = question(`Please enter new details: \n`);
-            users[userIndex].updateUserName(newUserName);
-            return updateQuestionAnswer;
-        case 3:
-            let newDateOfBirth = question(`Please enter new details: \n`);
-            users[userIndex].updateDateOfBirth(newDateOfBirth);
-            return updateQuestionAnswer;
-        case 4:
-            return questionAnswerHandler();
-    }
-    return updateQuestionAnswer;
+function updateUser(userIndex:number): number{
+    let updateQuestionAnswer = askQuestions(updateUserQuestions);
+    if (updateQuestionAnswer === 0) {
+        let userUpdateInput = question(`Please enter new first name: \n`);
+        users[userIndex].updateFirstName(userUpdateInput);
+        return updateUser(userIndex);
+    } else if (updateQuestionAnswer === 1) {
+        let userUpdateInput = question(`Please enter new last name: \n`);
+        users[userIndex].updateLastName(userUpdateInput);
+        return updateUser(userIndex);
+    } else if (updateQuestionAnswer === 2) {
+        let userUpdateInput = question(`Please enter new username: \n`);
+        users[userIndex].updateUserName(userUpdateInput);
+        return updateUser(userIndex);
+    } else if (updateQuestionAnswer === 3) {
+        let userUpdateInput = question(`Please enter new date of birth (yyyy-mm-dd): \n`);
+        users[userIndex].updateDateOfBirth(userUpdateInput);
+        return updateUser(userIndex);
+    } else if (updateQuestionAnswer === 4) {
+        users[userIndex].display()
+        return questionAnswerHandler();
+    } 
+    return questionAnswerHandler();
 }
 
 function deleteUser(users:User[], userNameToDelete:string): void{
@@ -115,6 +116,18 @@ function deletePost(userPostArray: Post[]): void {
     userPostArray.splice(postIndexToDelete, 1)
 }
 
+// function to check if username exists and returns user index if it does
+function userNameChecker(): number {
+    let userName = question("Please enter username: ")
+    let userIndex = users.map(user => user.userName).indexOf(userName)
+    if (userIndex === -1) {
+        console.log(`${userName} DOES NOT EXIST!`)
+        return questionAnswerHandler();
+    }
+    return userIndex
+}
+
+// function to take input string array of user options/questions and return the index of the users chosen option
 function askQuestions(questionList: string[]): number {
     let index = keyInSelect(questionList, "Choose an option", {cancel:false});
     // console.log(index)
@@ -126,17 +139,12 @@ function questionAnswerHandler(): number{
     let initialAnswer = askQuestions(initialQuestions)
     // console.log(initialAnswer)
     switch(initialAnswer) {
+        // Log in to user for access to user actions
         case 0:
-            let logInUserName = question("Please enter your username: ")
-            let logInUserIndex = users.map(user => user.userName).indexOf(logInUserName)
-            if (logInUserIndex === -1) {
-                console.log(`${logInUserName} DOES NOT EXIST!`)
-                return questionAnswerHandler();
-            } else {
-                userAction(logInUserIndex);
-            }
+            let logInUserIndex = userNameChecker()
+            userAction(logInUserIndex)
             return questionAnswerHandler();
-
+        // create a new user
         case 1:
             let userCreationAnswers:string[] = [];
             for (let index = 0; index < userCreationQuestions.length; index++) {
@@ -146,33 +154,26 @@ function questionAnswerHandler(): number{
             let user = createUser(userCreationAnswers, userId);
             users.push(user);
             return questionAnswerHandler();
-
+        // update a users details
         case 2:
-            let userNameToUpdate = question("Please enter the username of the account you would like to update: \n");
-            let userIndexToUpdate = users.map(user => user.userName).indexOf(userNameToUpdate)
-            if (userIndexToUpdate === -1) {
-                console.log(`${userNameToUpdate} DOES NOT EXIST!`);
-                return questionAnswerHandler();
-            } else {
-                let updateQuestionAnswer = askQuestions(updateUserQuestions);
-                updateUser(users, userIndexToUpdate, updateQuestionAnswer);
-                console.log(users);
-                return questionAnswerHandler();
-            }
-
+            let userIndexToUpdate = userNameChecker();
+            updateUser(userIndexToUpdate);
+            console.log(users);
+            return questionAnswerHandler();
+        // delete a user
         case 3:
             let deleteUserName = question("Please enter the username of the account you would like to delete: \n");
             deleteUser(users, deleteUserName);
             console.log("User has been deleted.");
             console.log(users);
             return questionAnswerHandler();
-
+        // exit the app
         case 4:
             console.log("Goodbye");
             return initialAnswer;
         
         default:
-            return questionAnswerHandler()
+            return questionAnswerHandler();
     }
 }
 

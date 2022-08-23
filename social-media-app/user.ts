@@ -40,12 +40,11 @@ export class User {
 
     // functions
     display(): void {
-        console.log(this.firstName);
-        console.log(this.lastName);
-        console.log(this.userName);
-        console.log(this.dateOfBirth);
-        console.log(this.createdAt)
-        console.log(this.userId)
+        console.log("First name: "+this.firstName);
+        console.log("Last name: "+this.lastName);
+        console.log("Username: "+this.userName);
+        console.log("Date of birth: "+this.dateOfBirth);
+        console.log("User ID: "+this.userId)
     }
 
     updateFirstName(input: string) {
