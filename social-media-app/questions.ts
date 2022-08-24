@@ -38,8 +38,14 @@ export const userPostQuestions: string[] = [
 
 export const userChatQuestions: string[] = [
     "Create new chat",
-    "Send message",
-    
+    "Send Message",
+    "View all chats",
+    "Go back"
 ];
+
+export const chatCreationQuestion: string[] = [
+    "Add another user",
+    "Finish"
+]
 
 

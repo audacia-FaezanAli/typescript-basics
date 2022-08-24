@@ -12,8 +12,11 @@ export class Message {
     person: User;
 
     // constructor
-    constructor() {
-        
+    constructor(message:string, senderUserId:number, chatId:number) {
+        this.message = message;
+        this.userId = senderUserId;
+        this.chatId = chatId;
+        // this.chat = 
     }
 
     // functions

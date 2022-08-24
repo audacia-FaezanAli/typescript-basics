@@ -1,0 +1,38 @@
+{
+  "User": {
+    "userId": "number",
+    "firstName": "string",
+    "lastName": "string",
+    "userName": "string",
+    "dateOfBirth": "Date",
+    "createdAt": "Date",
+    "posts": [],
+    "chats": [],
+    "messages": []
+  },
+  "Post": {
+    "userId": "number",
+    "postId": "number",
+    "user": "User",
+    "content": "string",
+    "dateCreated": "Date",
+    "photos": [],
+    "replies": []
+  },
+  "Chat": {
+    "chatId": "number",
+    "users": [],
+    "messages": []
+  },
+  "Message": {
+    "message": "string",
+    "dateSent": "Date",
+    "userId": "number",
+    "chatId": "number"
+  },
+  "Photo": {
+    "name": "string",
+    "dateUploaded": "Date",
+    "url": "string"
+  }
+}

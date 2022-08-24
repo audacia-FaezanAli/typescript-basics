@@ -63,6 +63,14 @@ export class User {
         this.dateOfBirth = new Date(input)
     }
 
+    addChat(input: Chat) {
+        this.chats.push(input)
+    }
+
+    getUserName(): string{
+        return this.userName
+    }
+
 }
 
 

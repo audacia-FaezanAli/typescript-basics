@@ -32,11 +32,15 @@ export class Post implements IPost {
 
     // functions
     displayPost(): void{
-        console.log("Username: "+this.user.userName)
-        console.log("Date: "+this.dateCreated)
-        console.log("Post: "+this.content)
-        console.log("Replies: "+this.replies.forEach(reply => console.log(reply)))
-        console.log("\n")
+        console.log("Username: "+this.user.userName);
+        console.log("Date: "+this.dateCreated);
+        console.log("PostId: "+this.postId)
+        console.log("Post: "+this.content);
+        if (this.replies.length === 0 || this.replies == undefined) {
+            console.log("No replies \n");
+        } else {
+            console.log("Replies: "+(this.replies.forEach(reply => console.log(reply))));
+        }
     }
 }
 
