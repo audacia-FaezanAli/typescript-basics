@@ -6,15 +6,15 @@ import { Photo } from "./photo";
 export class Message {
     // fields
     message: string;
-    userId: number;
+    sender: User;
     chatId: number;
-    chat: Chat;
-    person: User;
+    // // chat: Chat;
+    // person: User;
 
     // constructor
-    constructor(message:string, senderUserId:number, chatId:number) {
+    constructor(message:string, sender:User, chatId:number) {
         this.message = message;
-        this.userId = senderUserId;
+        this.sender = sender;
         this.chatId = chatId;
         // this.chat = 
     }

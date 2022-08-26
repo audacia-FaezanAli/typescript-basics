@@ -5,24 +5,32 @@ import { Photo } from "./photo";
 
 export class Chat {
     // fields
+    messageId: number
     chatId: number;
-    users: User[];
+    usersIds: number[];
     messages: Message[];
-    userId: number;
+    ownerUserId: number;
+    userNames: string[];
 
     // constructor
-    constructor(chatParticipants: User[], chatOwnerUserId:number) {
+    constructor(chatParticipants: number[], chatOwnerUserId:number, chatUserNames:string[]) {
         this.chatId = 0;
-        this.users = chatParticipants;
+        this.usersIds = chatParticipants;
         this.messages = [];
-        this.userId = chatOwnerUserId;
+        this.ownerUserId = chatOwnerUserId;
+        this.userNames = chatUserNames
+        this.messageId = 0
     }
 
     // functions
     displayChat(): void {
-        console.log("ChatID: "+this.chatId);
-        console.log("Chat Owner: "+ this.userId);
-        console.log("Chat Participants: "+this.users.forEach(user => {user.userName}))
-        console.log("Messages: " + this.messages);
-    }
-}
+        console.log("ChatID: "+this.chatId);;
+        console.log(...this.userNames)
+        // this.userNames.forEach(userName => {console.log(userName)})
+        console.log("Messages: ");
+        this.messages.forEach(Message => {
+            if (Message !== undefined) {
+                console.log(Message.sender.userName +': ' +Message.message)}
+            })
+        }}
+        console.log("")

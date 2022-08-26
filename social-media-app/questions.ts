@@ -37,8 +37,8 @@ export const userPostQuestions: string[] = [
 ];
 
 export const userChatQuestions: string[] = [
-    "Create new chat",
     "Send Message",
+    "Create new chat",
     "View all chats",
     "Go back"
 ];
@@ -48,4 +48,8 @@ export const chatCreationQuestion: string[] = [
     "Finish"
 ]
 
+export const sendMessageQuestions: string[] = [
+    "Send new message",
+    "Go back"
+]
 
