@@ -134,7 +134,7 @@ function chatsMenu(userIndex:number): number {
         let limit= Array.from(Array(userChatArray.length+1).keys())
         let chatChoice = question('Input chosen Chat ID: ', {limit: limit})
 
-        let newMessage = sendMessage(userIndex, +chatChoice)
+        let newMessage = sendMessage(userIndex, +chatChoice, userChatArray)
         userChatArray[+chatChoice].messages.push(newMessage)
         
     } else if (userChatSelection === 1) {
@@ -177,7 +177,7 @@ function createChat(userIndex: number, userChatArray:Chat[]): Chat{
         }
     } while (addAnotherUser);
     // creates new Chat object and defines the value of the chat ID also adds the chat object to each of the participants chats array
-    console.log(chatMembers)
+    console.log(''+chatMembers)
     if (chatMembers.length>1) {
         // let chatterUserNames:string[] =[]
         let chatterUserNames = chatMembers.map(index => (userNames[index]))
@@ -195,11 +195,13 @@ function createChat(userIndex: number, userChatArray:Chat[]): Chat{
 function viewAllChats(userChatArray: Chat[]): void {
     for (let index = 0; index < userChatArray.length; index++) {
         userChatArray[index].displayChat()
+        console.log('')
     }
 }
 
-function sendMessage(userIndex:number, chatId:number): Message {
+function sendMessage(userIndex:number, chatId:number, userChatArray:Chat[]): Message {
     let messageSender = users[userIndex]
+    userChatArray[chatId].displayChat()
     let messageContent = question("Enter message: ")
     return new Message(messageContent, messageSender, chatId)
 
@@ -259,7 +261,7 @@ function mainMenuHandler(): number{
         // exit the app
         case 4:
             console.log("Goodbye");
-            return initialAnswer;
+            return process.exit(1);
         
         default:
             return mainMenuHandler();

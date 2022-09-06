@@ -24,13 +24,13 @@ export class Chat {
 
     // functions
     displayChat(): void {
-        console.log("ChatID: "+this.chatId);;
+        console.log('ChatID: '+this.chatId);;
         console.log(...this.userNames)
         // this.userNames.forEach(userName => {console.log(userName)})
-        console.log("Messages: ");
+        console.log('Messages: ');
         this.messages.forEach(Message => {
             if (Message !== undefined) {
                 console.log(Message.sender.userName +': ' +Message.message)}
             })
         }}
-        console.log("")
+        console.log('')
