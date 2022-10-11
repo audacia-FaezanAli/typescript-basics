@@ -28,13 +28,23 @@ export function numberRemainder(dividend:number, divisor:number): number{
     return remainder
 }
 
-export function numberIncrement(x:number, times:number): [number, number]{
-    while (times>0) {
+export function numberIncrement(x:number): number{
     x++
-    times--
-    }
-    return [x, times]
-}
+    return x
+};
+
+export function numberDecrement(x:number): number{
+    x--
+    return x
+};
+
+// export function numberIncrement(x:number, times:number): [number, number]{
+//     while (times>0) {
+//     x++
+//     times--
+//     }
+//     return [x, times]
+// }
 
 export function mod(
     dividend: number,
